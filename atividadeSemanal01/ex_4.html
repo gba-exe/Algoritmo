@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex.4</title>
+</head>
+<body>
+    <h1>Desperdício de água</h1>
+    Digite quantos minutos a torneira ficou pingando <input id="iptTorneira1">
+    <br><br>
+    Digite quantos minutos a torneira ficou pingando <input id="iptTorneira2">
+    <br><br>
+    Digite quantos minutos a torneira ficou pingando <input id="iptTorneira3">
+    <br><br>
+    <button onclick="calcular()">Calcular desperdício</button>
+</body>
+</html>
+<script>
+    function calcular(){
+        let desperdicio = iptTorneira1.value * 15 + iptTorneira2.value * 15 + iptTorneira3.value * 15 
+        alert("Suas 3 torneiras, juntas, desperdiçaram " + desperdicio + " litros de água");
+    }
+</script>

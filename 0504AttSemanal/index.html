@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poupar</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        <h1>Poupança</h1>
+        Digite seu nome<input type="text" id="iptNome">
+        Digite seu objetivo<input type="text" id="iptObjetivo">
+        Digite o valor do seu objetivo<input type="text" id="iptValorObjetivo">
+        <div class="divAvancar">
+            <button onclick="avancar1()">
+                Avançar >
+            </button>
+        </div>
+    </div>
+    <div class="divContent" id="tela2">
+        <div id="divSaldo">
+        </div>
+        <div id="divTexto1">
+        </div>
+        <div id="divBtn">
+            <button onclick="guardar()">Guardar R$ 5,00</button>
+            <button onclick="retirar()">Retirar R$ 10,00</button>
+        </div>
+    </div>
+    <div class="divContent" id="tela3">
+        <h1>Resumo da Jornada</h1>
+        <div id="divTexto2">
+
+        </div>
+        <div class="divAvancar">
+            <button onclick="reiniciar()">
+                < Reiniciar </button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var erro = false;
+    var valorGuardado = 0.00;
+    var depositos = 0;
+    var retiradas = 0;
+
+    tela2.style.display = 'none';
+    tela3.style.display = 'none';
+
+
+    function verificar() {
+        /* Tela 1 */
+        if (iptNome.value.length < 5) {
+            alert("Informar corretamente o nome do usuário.");
+            erro = true;
+            iptNome.style.border = '1px solid red';
+        }
+        if (
+            iptObjetivo.value.toUpperCase().startsWith("COMPRAR") == false &&
+            iptObjetivo.value.toUpperCase().startsWith("ADQUIRIR") == false &&
+            iptObjetivo.value.toUpperCase().startsWith("IMPORTAR") == false &&
+            iptObjetivo.value.toUpperCase().startsWith("ARRENDAR") == false
+        ) {
+            alert("Informar corretamente o objetivo.")
+            erro = true;
+            iptObjetivo.style.border = '1px solid red';
+        }
+        if (iptValorObjetivo.value < 100) {
+            alert("Vamos lá... Você quer poupar ou não???");
+            erro = true;
+            iptValorObjetivo.style.border = '1px solid red';
+        } else if (iptValorObjetivo.value > 1000) {
+            alert("Calma.... esse valor é só quando você estiver estagiando.");
+            erro = true;
+            iptValorObjetivo.style.border = '1px solid red';
+        } else {
+            erro = false;
+        }
+        /* /Tela 1 */
+
+        /* Tela 2 */
+        if (erro == false) {
+            divSaldo.innerHTML = `Sr(a) ${iptNome.value}, você tem guardado: R$ ${valorGuardado}`;
+
+            if (valorGuardado >= iptValorObjetivo.value) {
+                alert(`PARABENS, ${iptNome.value}!!! você atingiu a meta de R$ ${iptValorObjetivo.value} e agora poderá ${iptObjetivo.value}`);
+                tela2.style.display = 'none';
+                tela3.style.display = 'block';
+            }
+            else if (valorGuardado >= 0 && valorGuardado < 81) {
+                divTexto1.innerHTML = "Finanças OK! – continue assim para atingir o objetivo!"
+                divTexto1.style.color = "blue";
+            } else if (valorGuardado > 80) {
+                divTexto1.innerHTML = "MUITO BEM!!! – você está próximo do objetivo"
+                divTexto1.style.color = "black";
+            } else if (valorGuardado < 0 && valorGuardado > (-19)) {
+                divTexto1.innerHTML = "Finanças em perigo!"
+                divTexto1.style.color = "red";
+            } else {
+                divTexto1.innerHTML = `${iptNome.value} quase no SERASA!`
+            }
+            /* /Tela 2 */
+
+            /* Tela 3 */
+            divTexto2.innerHTML = `<ul>
+                                    <li> Nome: ${iptNome.value} </li>
+                                    <li> Objetivo: ${iptObjetivo.value} </li>
+                                    <li> Valor Guardado: R$ ${valorGuardado} </li>
+                                    <li> Quantidade de depósitos: ${depositos} </li>
+                                    <li> Quantidade de retiradas: ${retiradas} </li>
+                                    <li> Se você não tivesse feito retiradas você teria hoje: ${valorGuardado + (retiradas * 10)} </li>
+                               </ul> `
+        }
+        /* /Tela 3 */
+    }
+
+    function avancar1() {
+        valorGuardado = 0;
+        verificar()
+        if (erro == false) {
+            tela1.style.display = 'none';
+            tela2.style.display = 'block';
+        }
+    }
+
+    function reiniciar() {
+        tela3.style.display = 'none';
+        tela1.style.display = 'flex';
+        iptNome.style.border = 'black';
+        iptObjetivo.style.border = 'black';
+        iptValorObjetivo.style.border = 'black';
+    }
+
+    function guardar() {
+        valorGuardado += 5;
+        depositos++;
+        verificar()
+    }
+    function retirar() {
+        valorGuardado -= 10;
+        retiradas++;
+        verificar()
+    }
+
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;  
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .divAvancar {
+        width: 100%;
+        padding: 1%;
+        display: flex;
+        justify-content: end;
+    }
+
+    #divBtn {
+        display: flex;
+        justify-content: center;
+    }
+
+    #divTexto2 {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

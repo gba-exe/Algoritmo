@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poupar</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        <h1>Poupança!</h1>
+        Digite o valor guardado: <input id="iptValorGuardado">
+        Digite o valor que irá ser poupado: <input id="iptValorPoupado">
+        Digite a quantidade de meses: <input id="iptQtdMeses">
+        Digite o percentual de juros mensal: <input id="iptJurosMes">
+        <button onclick="poupar()">
+            Vamos poupar!
+        </button>
+    </div>
+    <div class="divContent" id="tela2">
+
+    </div>
+</body>
+
+</html>
+<script>
+    var erro = false;
+    tela2.style.display = "none";
+    
+
+    function testes() {
+        var meses = Number(iptQtdMeses.value);
+        var valorGuardado = Number(iptValorGuardado.value);
+        var valorPoupado = Number(iptValorPoupado.value);
+        var jurosMes = Number(iptJurosMes.value);
+        tela2.style.display = "none";
+
+        if (valorPoupado <= 0) {
+            alert("Você tem que poupar mais do que 0!");
+            erro = true;
+        }
+
+        if (meses <= 10) {
+            alert("Você tem que poupar por mais do que 10 meses!");
+            erro = true;
+        }
+
+        if (jurosMes < 0.5 || jurosMes > 2) {
+            alert("Os juros mensais só podem estar entre 0.5 e 2%!");
+            erro = true;
+        }
+    }
+
+    function poupar() {
+        var i = 0;
+        var saldoInicial = 0;
+        var saldoTotal = 0;
+        var juros = 0;
+        var jurosTotal = 0;
+        
+        var meses = Number(iptQtdMeses.value);
+        var valorGuardado = Number(iptValorGuardado.value);
+        var valorPoupado = Number(iptValorPoupado.value);
+        var jurosMes = Number(iptJurosMes.value);
+        
+        testes();
+        
+        if (erro == false) {
+            saldoInicial = valorGuardado;
+            tela2.style.display = "block";
+            tela2.innerHTML = '';
+            while (i < meses) {
+                i++;
+                juros = saldoInicial * (jurosMes / 100)
+                saldoTotal = saldoInicial + valorPoupado + juros
+                tela2.innerHTML += `<p>Mês ${i} - saldo inicial = R$ ${saldoInicial.toFixed(2)} saldo final = R$ ${saldoTotal.toFixed(2)}</p>`;
+                saldoInicial = saldoTotal;
+                jurosTotal += juros
+            }
+            tela2.innerHTML +=
+                `<p>
+                Você começou com: R$ ${valorGuardado.toFixed(2)}<br>
+                Depositou: R$ ${(valorPoupado * meses).toFixed(2)}<br>
+                E agora você tem: R$ ${saldoTotal.toFixed(2)}<br>
+                Neste período sua conta rendeu: R$ ${jurosTotal.toFixed(2)}<br>
+                Sua rentabilidade foi de: ${((jurosTotal / ((valorPoupado * meses) + valorGuardado)) * 100).toFixed(2)}%
+            </p>`;
+        }
+    }
+
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        margin: 10px;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    button {
+        width: 50%;
+        margin: auto;
+    }
+
+    .divContent {
+        width: 50%;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+</style>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carona</title>
+  </head>
+  <body>
+    Informe a distância da corrida (km)<input id="iptDistancia" /><br /><br />
+    Informe o número do volume de chamadas (0-100)
+    <input id="iptVolume" /><br /><br />
+    <button onclick="corrida()">Calcular custo da viagem</button><br /><br />
+    <p id="pMsg"></p>
+  </body>
+</html>
+
+<script>
+  function corrida() {
+    pMsg.innerHTML = ``;
+    var distancia = Number(iptDistancia.value);
+    console.log(`Distância: ${distancia}`);
+    var volume = Number(iptVolume.value);
+    console.log(`Volume: ${volume}`);
+    pMsg.innerHTML = `Neste momento o volume de chamadas é de ${volume}, iniciada a corrida para ${distancia} quilômetros<br>`;
+    distancia = distancia + 4;
+    console.log(`Distância + 4: ${distancia}`);
+    var valorCorrida = 7 + 1.5 * distancia;
+    console.log(`valorCorrida: ${valorCorrida} (7 + ${1.5 * distancia})`);
+    if (volume < 20) {
+      valorCorrida = valorCorrida - valorCorrida * 0.05;
+    console.log(`valorCorrida: ${valorCorrida} (${valorCorrida} - ${0.05 * valorCorrida})`);
+    } else if (volume >= 80) {
+      valorCorrida = valorCorrida + valorCorrida * 0.5;
+    console.log(`valorCorrida: ${valorCorrida} (${valorCorrida} + ${0.5 * valorCorrida})`);
+    }
+    pMsg.innerHTML += `O valor final da corrida para o cliente será de R$ ${valorCorrida}<br>`;
+    pMsg.innerHTML += ` O valor descontado do motorista será R$ ${valorCorrida * 0.02}, logo ele receberá um valor líquido de R$ ${valorCorrida - valorCorrida * 0.02}<br>`;
+    console.log(`valorDesconto: ${valorCorrida*0.02}`);
+ }
+</script>

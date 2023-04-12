@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex12</title>
+</head>
+
+<body>
+    <div id="divContent">
+        <h1>De quanto em quantos dias você faz musculação?</h1>
+        <input id="iptDias">
+        <button onclick="rotina()">Exibir rotina mensal</button>
+        <div id="divResposta"></div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function rotina() {
+        var dias = 0
+        divResposta.innerHTML = ""
+        var musculacao = iptDias.value;
+        if (musculacao.length == 1) {
+            while (dias <= 30) {
+                if (dias % musculacao == 0) {
+                    dias++;
+                    divResposta.innerHTML += `<a>Dia ${dias} - <b>Musculação<b><a>`;
+                } else {
+                    dias++;
+                    divResposta.innerHTML += `<a>Dia ${dias} - Comer, dormir etc<a>`;
+                }
+            }
+        } else {
+            alert("Insira um número e apenas um número");
+        }
+    }
+
+</script>
+
+<style>
+    body {
+        height: 100vh;
+    }
+
+    div {
+        width: 25%;
+        height: fit-content;
+        margin: auto;
+        border-radius: 5%;
+        padding: 2%;
+        color: white;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+</style>

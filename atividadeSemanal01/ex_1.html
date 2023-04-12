@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex.1</title>
+</head>
+<body>
+    <h1>Semáforo</h1>
+    <button id="btnPare" onclick="parar()">Pare</button> 
+    <button id="btnPense" onclick="pensar()">Pense</button> 
+    <button id="btnSiga" onclick="seguir()">Siga</button>
+    <h2 id="texto"></h2>
+</body>
+</html>
+<script>
+    function parar(){
+        texto.innerHTML = ("Pare e aguarde");
+    }
+    function pensar(){
+        texto.innerHTML = ("Pense se pode seguir ou se deve parar!");
+    }
+    function seguir(){
+        texto.innerHTML = ("Pode seguir adiante");
+    }
+</script>
+
+<style>
+    button{
+        font-size: large;
+    }
+    button#btnPare:hover{
+        background-color: red;
+    }
+    button#btnPense:hover{
+        background-color: yellow;
+    }
+    button#btnSiga:hover{
+        background-color: green;
+    }
+</style>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Digite o nome da pessoa que você mais ama na vida <input type="text" id="iptNome"><br>
+    Digite o quanto você ama essa pessoa <input type="text" id="iptQtd"><br>
+    <button onclick="amor()">Expressar amor</button>
+    <div id="contador"></div>
+</body>
+
+</html>
+
+<script>
+    function amor() {
+        for (i = 1; i <= iptQtd.value; i++){
+            contador.innerHTML += `${i} - <b>${iptNome.value}</b> eu te amo! <i>Sempre lembre disso!</i><br>`;
+        }
+    }
+</script>

@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 10px;
+    gap: 20px;
+}
+input{
+    width: 100%;
+    font-size: large;
+}
+
+body{
+    background-image: url('https://imgs.search.brave.com/H4AVuAq9xuVR1bgpLiwvutAjVd0vfFyRwvJyJwZur4o/rs:fit:640:426:1/g:ce/aHR0cDovL3d3dy5y/YnNkaXJlY3QuY29t/LmJyL2ltYWdlc3Jj/LzIzNzI0Njg0Lmpw/Zz93PTY0MA');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    width: fit-content;
+    height: fit-content;
+    padding: 5%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
+    border-color: #a78f70;
+    border-width: 2px;
+    border-style: solid;;
+}
+
+#divInput{
+    width:100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>É Tri e Penta!</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        <h1>3 e 5!</h1>
+        <button onclick="multiplos()">
+            Curto 3 e 5!
+        </button>
+    </div>
+</body>
+
+</html>
+<script>
+    /* No código há uma outra forma de resolver, com conteúdo que não foi ensinado, porém gostaria de tirar dúvidas sobre o método que usei */
+
+    var n = {
+        3: "É TRI!",
+        5: "É PENTA!"
+    };
+
+    function validacao(i, output) {
+        for (var key in n){
+            if (i % key == 0) output += n[key];
+        }
+        tela1.innerHTML += `<b>${output}</b>`;
+    }
+    
+    function multiplos() {
+        for (i = 1; i <= 100; i++) {
+            var output = '';
+
+            validacao(i, output)
+            
+            // if (i % 3 == 0) { output += `É TRI!`; }
+            // if (i % 5 == 0) { output += `É PENTA!`; }
+
+            if (output == '') {
+                output = `<p>${i}</p>`;
+                console.log(i);
+            }
+
+            tela1.innerHTML += `<b>${output}</b>`;
+        }
+    }
+
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        margin: 0px;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    button {
+        width: 50%;
+        margin: auto;
+    }
+
+    p {
+        font-weight: lighter;
+    }
+
+    .divContent {
+        width: 50%;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+</style>

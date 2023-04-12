@@ -1,0 +1,117 @@
+15. Agostinho é um taxista do Rio de Janeiro que deseja automatizar sua frota de táxis (Carrara Drivers). Faça um programa em HTML/JS que:
+
+a) Tenha um campo para nome do passageiro;
+
+  a.1) Este campo tem que estar preenchido, caso contrário emitir alerta explicativo ao usuário
+
+  OBS. Uma das formas para saber se não foi preenchido nada em um campo teste:  if (cpo == ‘’)...  
+
+
+b) Tenha um campo para a distância (em km) do local atual para o destino do passageiro;
+
+  b.1) Este campo tem que ser maior que 0 e menor que 100
+
+        b.1.1) Se o campo estiver com 0, emitir alerta com “informar corretamente a distância”
+
+        b.1.2) Se o campo for maior que 100, emitir alerta com “viagens devem ser negociadas com a nossa central”.
+
+
+c) Tenha um campo que recebe a informação da bandeira da corrida
+
+  c.1) Este campo só pode aceitar números entre 1 e 3, caso contrário emitir alerta explicativo ao usuário
+
+ 
+
+d) Tenha um campo que recebe o horário da corrida (sistema de 24 horas e somente horas inteiras);
+  d.1) Este campo só pode aceitar números entre 0 e 23, caso contrário emitir alerta explicativo ao usuário
+
+ 
+
+e) Ao clicar em "Calcular Corrida", verifique:
+
+  e.1) Se algum erro foi encontrado nos campos de entrada, emita na tela abaixo do botão “Calcular Corrida”, a seguinte mensagem:
+
+                 “Favor corrigir o(s) dado(s) de entrada para seguirmos em frete”
+
+ 
+
+  e.2) Se nenhum erro foi encontrado, emita na tela abaixo do botão “Calcular Corrida”, uma mensagem informando ao passageiro o valor final da corrida, com uma frase assim:
+             "Olá, NOME. Sua corrida, será na bandeira X, percorrerá Y km e o total da corrida será de Z"
+
+
+
+f) Siga a tabela abaixo para calcular o adicional por bandeira e horário:
+
+
+
+Obs: O valor nominal da corrida é de R$ 1,25 por km;
+
+
+
+ 
+
+Bandeira 1
+
+0h - 6h
+
+7,5%
+
+7h - 12h
+
+10%
+
+13h - 23h
+
+12,5%
+
+Bandeira 2
+
+0h - 6h
+
+10%
+
+7h - 12h
+
+15%
+
+13h - 23h
+
+20%
+
+Bandeira 3
+
+0h - 6h
+
+15%
+
+7h - 12h
+
+30%
+
+13h - 23h
+
+45%
+
+
+
+g)  Faça o ajuste do valor corrida da seguinte forma:
+
+  g.1) Pagamento em PIX conceder um desconto de 2,5%;
+
+  g.2) Para pagamento em dinheiro o valor não se altera.
+
+  g.3) Para pagamento em cartão (debito ou crédito) adicionar 3,5%
+
+ 
+
+ 
+
+h) Abaixo da mensagem do item e.2) emitir as mensagens abaixo com os cálculos realizados em g):
+
+   
+
+   “Se você efetuar o pagamento com PIX a corrida será de R$ 999,99”
+
+   “Se você efetuar o pagamento em dinheiro a corrida será de R$ 999,99 (favor facilitar o troco)”
+
+   “Se você efetuar o pagamento com cartão (débito ou crédito) a corrida será de R$ 999,99”

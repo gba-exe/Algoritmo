@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        <h1>Banco</h1>
+        Digite quantos depósitos você fez: <input type="text" id="iptDepositos">
+        Digite o valor dos depósitos: <input type="text" id="iptValor">
+            <button onclick="grana()">
+                Acompanhar grana
+            </button>
+    </div>
+    <div class="divContent" id="tela2">
+
+    </div>
+</body>
+
+</html>
+<script>
+    tela2.style.display = 'none';
+
+    function grana() {
+        var i = 0;
+        
+        var depositos = iptDepositos.value;
+        var valor = Number(iptValor.value);
+        var total = 0;
+
+    tela2.style.display = 'flex';
+
+        
+        while (i < depositos){
+            i++;
+            total = total + valor;
+            tela2.innerHTML += `${i}° Mês: R$ ${total}<br>`
+        }
+        
+        tela2.innerHTML += `Total guardado: R$ ${total}` 
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;  
+        margin: 2px;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+</style>

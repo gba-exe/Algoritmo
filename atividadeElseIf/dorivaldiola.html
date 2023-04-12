@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de raios</title>
+    <link rel="icon" type="image/x-icon" href="DORIVALDIOLA.png">
+</head>
+
+<body>
+    <h1>DOMINA AÍ MARCOS LEONARDO</h1>
+    Insira a quantidade de jogos:
+    <input id="iptJogos"><br><br>
+    Inisira a quantidade de gols
+    <input id="iptGols"><br><br>
+    <button onclick="dominar()">Craque ou bagre?</button>
+    <p id="daml"></p>
+
+</body>
+
+</html>
+
+<script>
+    function dominar() {
+        daml.innerHTML = ``
+        var jogos = Number(iptJogos.value)
+        var gols = Number(iptGols.value)
+        var media = gols / jogos
+        if (media >= 5) {
+            daml.innerHTML = `Maior dupla do mundo!<br>`
+            daml.innerHTML += `<img src="./LIMAMAR.jpeg">`
+        } else if (media >= 0.6) {
+            daml.innerHTML = `Atacante do futuro!<br>`
+            daml.innerHTML += `<img src="./dominaaimarcosleonardo.png">`
+        } else if (media >= 0.2) {
+            daml.innerHTML = `Atacante mediano!<br>`
+            daml.innerHTML += `    <img src="./solteldo.jpeg">`
+
+        } else {
+            daml.innerHTML = `Mudar de posição!<br>`
+            daml.innerHTML += `<img src="./anjelo.jpeg">`
+        }
+    }
+</script>

@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 10px;
+}
+input{
+    width: 100%;
+    font-size: large;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#divContent{
+    width: fit-content;
+    height: fit-content;
+    padding: 5%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
+    border-color: #d3b48c;
+    border-width: 1px;
+    border-style: solid;;
+}
+
+#divInput{
+    width:100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}

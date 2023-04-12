@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculo calorias</title>
+</head>
+
+<body>
+    Insira quantos pães franceses você come por dia:
+    <input id="iptPao"><br>
+    Insira quantos pacotes de bolacha recheada você come por dia:
+    <input id="iptBolacha"><br>
+    Insira quantos copos de achocolatado você toma por dia:
+    <input id="iptAchocolatado"><br>
+    <button onclick="calcular()">Verificar calorias</button><br>
+    <p id="pResposta"></p>
+</body>
+
+</html>
+
+<script>
+    function calcular() {
+        var calPao = Number(iptPao.value) * 50;
+        var calBolacha = Number(iptBolacha.value) * 80;
+        var calAchocolatado = Number(iptAchocolatado.value) * 70;
+        var calDiaria = calPao + calBolacha + calAchocolatado;
+
+        if (calDiaria < 200) {
+            pResposta.innerHTML = `Parabéns, vai sair em forma da quarentena!`
+        } else if (calDiaria < 400) {
+            pResposta.innerHTML = `Cuidado, vai ficar mais "fofinho(a)" após quarentena!`
+        } else {
+            pResposta.innerHTML = `Bom, acho que muitos não vão te reconhecer após a quarentena`
+        }
+    }
+</script>

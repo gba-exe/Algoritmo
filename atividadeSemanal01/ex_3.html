@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex.3</title>
+</head>
+<body>
+    <h1>Medidor de ki SSJ</h1>
+    Digite o seu nome <input id="iptNome">
+    <br><br>
+    Digite seu ki em sua forma normal <input id="iptKi">
+    <br><br>
+    <button onclick="medidorKi()">Ver ki em cada forma</button>
+</body>
+</html>
+<script>
+    function medidorKi(){
+        let ssj = iptKi.value * 50;
+        let ssj2 = iptKi.value * 100;
+        alert("Guerreiro " + iptNome.value + ", seu ki na forma Super Sayajin é " + ssj);
+        alert("Guerreiro " + iptNome.value + ", seu ki na forma Super Sayajin 2 é " + ssj2); 
+        
+        if(ssj >= 8000 || ssj2 >= 8000){
+            alert("É mais de 8000!!!");
+        } 
+    }     
+</script>
