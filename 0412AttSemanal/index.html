@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisibilidade</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        Digite o limite inferior <input id="iptInferior">
+        Digite o limite superior <input id="iptSuperior">
+        Digite o primeiro número <input id="iptN1">
+        Digite o segundo número <input id="iptN2">
+        <button onclick="mostrar()">Mostrar</button>
+    </div>
+    <div class="divContent" id="tela2">
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    tela2.style.display = 'none';
+    var erro = false;
+    function teste() {
+        var limInferior = iptInferior.value;
+        var limSuperior = iptSuperior.value;
+        var n1 = iptN1.value;
+        var n2 = iptN2.value;
+
+        erro = false;
+
+        if (limInferior < 20) {
+            alert('Limite inferior tem que ser maior que 20');
+            erro = true;
+        }
+
+        if (limSuperior < limInferior || limSuperior > 1000) {
+            alert('Limite superior inválido, verifique o conteúdo');
+            erro = true;
+        }
+        if (n1 < 3 || n1 > 20) {
+            alert('Primeiro número de divisibilidade tem que estar entre 3 e 20');
+            erro = true;
+        }
+        if ((n2 < 3 || n2 > 20) && n2 == n1) {
+            alert('Segundo número de divisibilidade tem que estar entre 3 e 20 e ser diferente do primeiro');
+            erro = true;
+        }
+    }
+
+    function mostrar() {
+        teste();
+        tela2.innerHTML = '';
+        if (erro == false) {
+            var limInferior = iptInferior.value;
+            var limSuperior = iptSuperior.value;
+            var n1 = iptN1.value;
+            var n2 = iptN2.value;
+            var nDivisivel = false;
+            var nExibido = 0;
+            var media = 0;
+            var maiorNumero = 0;
+            var menorNumero = 1001;
+            total = 0;
+
+            tela2.style.display = 'flex';
+            tela2.style.flexDirection = 'column';
+
+            for (i = limInferior; i < limSuperior; i++) {
+                var output = '';
+
+                if (i % n1 == 0 && i % n2 == 0) { output += `<p>O número ${i} é divisível pelo primeiro e pelo segundo número</p>`; }
+                else if (i % n1 == 0) { output += `<p>O número ${i} é divisível pelo primeiro número</p>`; }
+                else if (i % n2 == 0) { output += `<p>O número ${i} é divisível pelo segundo número</p>`; }
+
+                if (output != '') {
+                    nDivisivel = true
+                    nExibido++;
+
+                    if (maiorNumero < i) { maiorNumero = i;}
+                    if (menorNumero > i) { menorNumero = i;}
+                    
+                    total += i;
+                    media = total / nExibido;
+                }
+
+                tela2.innerHTML += `${output}`;
+            }
+
+            if (nDivisivel == true) {
+                tela2.innerHTML += `<p>Quantidade de números exibidos: ${nExibido}</p>`;
+                tela2.innerHTML += `<p>Média dos números exibidos: ${media}</p>`;
+                tela2.innerHTML += `<p>Maior número exibido: ${maiorNumero}</p>`;
+                tela2.innerHTML += `<p>Menor número exibido: ${menorNumero}</p>`;
+            } else {
+                tela2.innerHTML += `<p>***Não foram encontrados números divisíveis***</p>`;
+            }
+
+        }
+    }
+
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .divAvancar {
+        width: 100%;
+        padding: 1%;
+        display: flex;
+        justify-content: end;
+    }
+
+    #divBtn {
+        display: flex;
+        justify-content: center;
+    }
+
+    #divTexto2 {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

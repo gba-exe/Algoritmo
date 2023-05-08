@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linhas</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <p id="pergunta">Insira a linha de ônibus:</p>
+        <input type="text" id="iptOnibus">
+        <button onclick="cadastrar()">Gravar Buzão</button>
+        <p id="pergunta">Digite a linha que você pegou:</p> 
+        <input type="text" id="iptPesquisa">
+        <button onclick="pesquisar()">Pesquisar</button>
+        <p id="resposta1"></p>
+        <p id="resposta2"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    var linha = [];
+    var output = '';
+    function cadastrar() {
+        var profissional = '';
+        resposta1.innerHTML = ''
+        linha.push(iptOnibus.value);
+
+        iptOnibus.value = ''
+
+        resposta1.innerHTML = ''
+        for (i = linha.length - 1; i >= 0; i--) {
+            output = `${i + 1} - ${linha[i]}`
+            resposta1.innerHTML += `<p>${output}</p>`
+        }
+    }
+
+    function pesquisar() {
+        var vezesLinha = 0;
+        var output = '';
+        for (i = 0; i < linha.length; i++) {
+            if (linha[i] == iptPesquisa.value) {
+                if (output != ''){
+                    output += `, `
+                }
+                output += `${i+1}`
+                vezesLinha++;
+            }
+        }
+        
+        if (output == '') {
+            resposta2.innerHTML = `<b>Você nunca pegou essa linha</b>`
+        } else {
+            resposta2.innerHTML = `<b>Você já pegou essa linha ${vezesLinha} vezes, nessa ordem: ${output}</b>`
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .pVermelho {
+        color: red;
+    }
+
+    .pAzul {
+        color: blue;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

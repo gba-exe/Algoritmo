@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <p id="pergunta">Digite o projeto:</p>
+        <input type="text" id="iptProjeto">
+        <button onclick="cadastrar()">Cadastrar</button>
+        <button onclick="mostrar()">Mostrar Projetos</button>
+        <p id="resposta1"></p>
+        <p id="resposta2"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    var projeto = [];
+    var output = '';
+    function cadastrar() {
+        var profissional = '';
+        resposta1.innerHTML = ''
+        projeto.push(iptProjeto.value);
+
+        iptProjeto.value = ''
+
+        if (projeto.length < 5) {
+            profissional = 'Júnior';
+        } else if (projeto.length < 13) {
+            profissional = `Pleno desde o projeto "${projeto[4]}"`;
+        } else {
+            profissional = `Pleno desde o projeto "${projeto[12]}"`;
+        }
+        resposta1.innerHTML = `Você já fez ${projeto.length} projeto(s), Por isso você é um profissional ${profissional}.`
+    }
+
+    function mostrar() {
+        resposta2.innerHTML = ''
+        for (i = projeto.length - 1; i >= 0; i--) {
+            output = `${i + 1} - ${projeto[i]}`
+            resposta2.innerHTML += `<p>${output}</p>`
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .pVermelho {
+        color: red;
+    }
+
+    .pAzul {
+        color: blue;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

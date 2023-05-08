@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDA Camisetas</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        <h1>SDA - AS MELHORES CAMISETAS DO BRASIL</h1>
+        <label for="qtdCamisetas">Digite a quantidade de camisetas solicitadas:</label> <input id="qtdCamisetas">
+
+        <label for="selTamanho">Selecione o tamanho:</label>
+        <select name="Tamanho" id="selTamanho">
+            <option value="select" selected disabled hidden>Tamanho</option>
+            <option value="P">P</option>
+            <option value="G">G</option>
+        </select>
+
+        <label for="selCor">Selecione o tipo de camisetas:</label>
+        <select name="Cor" id="selCor">
+            <option value="select" selected disabled hidden>Tipo</option>
+            <option value="branca">Brancas</option>
+            <option value="colorida">Coloridas</option>
+        </select>
+
+        <label for="iptDistancia">Informe a distância para entrega:</label> <input id="iptDistancia">
+
+        <button id="btnOrcar" onclick="orcar()">Orçar</button>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    var error = false;
+    var total = 0;
+    var preco = 0;
+    function teste() {
+        error = false;
+
+        var qtdCamiseta = qtdCamisetas.value;
+        var tamanho = selTamanho.value;
+        var tipo = selCor.value;
+        var distancia = iptDistancia.value;
+
+        if (qtdCamiseta < 100) {
+            alert(`Vendemos somente no atacado`);
+            error = true;
+        }
+        if (qtdCamiseta > 2000) {
+            alert(`Consulte nosso PCP (planejamento e controle da produção)`);
+            error = true;
+        }
+
+        if (tamanho == 'select' || tipo == 'select') {
+            alert('Selecione o tamanho e tipo');
+            error = true;
+        }
+
+        if (distancia <= 0) {
+            alert('Informar a distância de entrega');
+            error = true;
+        }
+    }
+
+    function extrato(){
+        var qtdCamiseta = qtdCamisetas.value;
+        var tamanho = selTamanho.value;
+        var tipo = selCor.value;
+
+        for (i = 1; i <= qtdCamiseta; i++ ){
+            console.log('a')
+            tela1.innerHTML += `<p>${i}° Camiseta ${tipo} de tamanho ${tamanho}, vendida por ${total}, totalizanto ${total}</p>`            
+            total += total;
+        }
+    }
+
+    function orcar() {
+        var qtdCamiseta = qtdCamisetas.value;
+        var tamanho = selTamanho.value;
+        var tipo = selCor.value;
+        var distancia = iptDistancia.value;
+
+        teste();
+        if (error == false) {
+            btnOrcar.style.display = 'none';
+
+            var precos = {
+                branca: {
+                    P: 15,
+                    G: 16,
+                },
+
+                colorida: {
+                    P: 17,
+                    G: 18,
+                }
+            }
+
+            if(tipo == 'branca'){
+                if(tamanho == 'P'){
+                    preco = qtdCamiseta * precos.branca.P;
+                } else{
+                    preco = qtdCamiseta * precos.branca.G;
+                }
+            }
+            if(tipo == 'colorida'){
+                if(tamanho == 'P'){
+                    preco = qtdCamiseta * precos.colorida.P;
+                } else{
+                    preco = qtdCamiseta * precos.colorida.G;
+                }
+            }
+
+            tela1.innerHTML += `<h1>Orçamento de Vendas</h1>`
+            tela1.innerHTML += `<p>Quantidade Solicitada: ${qtdCamiseta}</p>`
+            tela1.innerHTML += `<p>Produto Selecionado: ${tipo}</p>`
+            tela1.innerHTML += `<p>Tamanho Selecionado: ${tamanho}</p>`
+            tela1.innerHTML += `<p>O valor total das mercadorias é de R$ ${total.toFixed(2)} </p>`
+
+            if(distancia > 67){
+            tela1.innerHTML += `<p>Para essa distância será cobrado um adicional de R$ ${(total * 0.07).toFixed(2)} para entrega</p>`
+            }
+
+            tela1.innerHTML += `<button onclick="extrato()">Extrato Completo</button>`            
+        }
+    }
+
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 10px;
+    }
+
+    .divAvancar {
+        width: 100%;
+        padding: 1%;
+        display: flex;
+        justify-content: end;
+    }
+
+    #divBtn {
+        display: flex;
+        justify-content: center;
+    }
+
+    #divTexto2 {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

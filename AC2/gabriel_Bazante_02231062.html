@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Continuada 2</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela1">
+        Insira a quantidade de energia: <input type="text" id="iptEnergia">
+        Insira a quantidade de clones desejada: <input type="text" id="iptQtdClones">
+        Insira a quantidade de clones por linha<input type="text" id="iptLinha">
+        <button onclick="clonar()">Criar Clones</button>
+        <div class="divContent" id="tela2">
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var iptErro = false;
+    var valErro = false;
+
+    var energia = 0;
+    var qtdClones = 0;
+    var clonesLinha = 0;
+
+    function teste() {
+        energia = iptEnergia.value;
+        qtdClones = iptQtdClones.value;
+        clonesLinha = iptLinha.value
+
+        iptErro = false;
+        valErro = false;
+
+        if (energia < 20 || energia > 5000) {
+            iptErro = true;
+        }
+
+        if (qtdClones < 0 || qtdClones > 250) {
+            iptErro = true;
+        }
+
+        if (clonesLinha <= 0) {
+            iptErro = true;
+        }
+
+        if (energia < (qtdClones * 20)) {
+            valErro = true;
+        }
+
+        if (iptErro == true) {
+            alert(`ERRO NA ENTRADA DE DADOS – Energia tem que ser entre 20 e 5.000. Quantidade de Clones tem que ser entre 0 e 250. Quantidade de Clones por linha tem que ser maior que 0`);
+        }
+
+        if (valErro == true) {
+            alert(`A quantidade de energia é insuficiente`);
+        }
+    }
+
+    function clonar() {
+        energia = iptEnergia.value;
+        totClones = iptQtdClones.value;
+        qtdClones = totClones;
+        clonesLinha = iptLinha.value;
+        energiaFinal = energia;
+
+        tela2.innerHTML = '';
+
+        teste();
+
+        if (iptErro == false) {
+            while (energiaFinal > 20) {
+                var output = ``;
+                for (i = 0; i < clonesLinha; i++) {
+                    if (energiaFinal >= 20 && qtdClones > 0) {
+                        qtdClones--
+                        output += `<img src="./naruto.png" alt="Imagem Naruto">`
+                        energiaFinal -= 20;
+                        console.log(qtdClones)
+                    }
+                }
+                tela2.innerHTML += `<p>${output}</p>`
+            }
+
+            tela2.innerHTML += `<p>Energia Inicial: ${energia}</p>`
+            tela2.innerHTML += `<p>Qtde de Clones: ${totClones}</p>`
+            tela2.innerHTML += `<p>Sobra da energia: ${energiaFinal}</p>`
+
+            if (energiaFinal > 1000 || (totClones > 50 &&(energiaFinal / energia * 100) >= 20)){
+            tela2.innerHTML += `<p>PROVAVELMENTE VOCE VAI GANHAR</p>`
+            }
+            else if (energiaFinal > 500 || (totClones > 20 &&(energiaFinal / energia * 100) >= 20)){
+            tela2.innerHTML += `<p>A LUTA VAI SER MUITO BOA</p>`
+            } else {
+                tela2.innerHTML += `<p>TORÇA PARA O ADVERSÁRIO SER FRAQUINHO</p>`
+            }
+        }
+    }
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 2%;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        margin: 2px;
+    }
+
+    input {
+        font-size: larger;
+        border-style: hidden;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    img {
+        height: 100px;
+        width: 75px;
+    }
+
+    .divContent {
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+</style>

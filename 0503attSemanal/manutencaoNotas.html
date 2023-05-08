@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção de notas</title>
+</head>
+
+<body>
+    <div id="telaInicial">
+        <h1>Manutenção de notas</h1>
+        RA: <input id="iptRA"> Nota: <input id="iptNota">
+        <br><br>
+        <button onclick="incluir()">Incluir</button> <button onclick="excluir()">Excluir</button>
+        <br><br>
+        <button onclick="alterar()">Alterar</button> Nota: <input id="iptNotaAlt">
+        <br><br>
+        <button onclick="eliminar()">Eliminar buraco / Consultar</button>
+        <br><br>
+        <button onclick="ajustar()">Ajustar notas</button>
+        <br><br>
+        <div id="lista"></div>
+    </div>
+
+    <div id="telaConsulta" style="display: none;">
+        <h1>Tela de consulta</h1>
+        <button onclick="porRA()">Por RA</button> De: <input id="iptRADe"> Até: <input id="iptRAAte">
+        <br><br>
+        <button onclick="porNota()">Por Nota</button> De: <input id="iptNotaDe"> Até: <input id="iptNotaAte">
+        <br><br>
+        <div id="divAx" style="display: none;">
+            <h3>Cadastros Selecionados</h3>
+            <div id="listaConsulta"></div>
+        </div>
+        <div id="divResumo"></div>
+    </div>
+
+    <div id="telaAjuste" style="display: none;">
+        <h1>Tela de ajuste de notas</h1>
+        RA De: <input id="iptAjusteDe"> Até: <input id="iptAjusteAte">
+        <br><br>
+        <button onclick="bonus()">Bônus</button> Pontos: <input id="bonusPonto"> ou %: <input id="bonusPorcen">
+        <br><br>
+        <button onclick="reducao()">Redução</button> Pontos: <input id="reducaoPonto"> ou %: <input id="reducaoPorcen">
+        <br><br>
+        <div id="listaAjuste"></div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var aluno = {
+        ra: [],
+        nota: []
+    }
+
+    var alunoAlt = {
+        ra: [],
+        nota: []
+    }
+
+    var porRADe = 0;
+    var porRAAte = 0;
+    var porNotaDe = 0;
+    var porNotaAte = 0;
+
+/*--------------Começo Tela Inicial*--------------*/
+    function listar() {
+        lista.innerHTML = `<b>Cadastramento Efetuados</b><br>`;
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            if (aluno.ra[i] != undefined) {
+                lista.innerHTML += `${i+1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}<br>`;
+            }
+        }
+    }
+
+    function incluir() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var erro = false;
+
+        if (iptRA == "" || iptNota == "") {
+            alert("Preencha todos os campos");
+            erro = true;
+        }
+        if (ra < 2000 || ra > 3000) {
+            alert("O RA deve estar entre 2000 e 3000");
+            erro = true;
+        }
+        if (nota < 0 || nota > 10) {
+            alert("A nota deve estar entre 0 e 10");
+            erro = true;
+        }
+        for (i = 0; i < aluno.ra.length; i++) {
+            if (aluno.ra[i] == ra) {
+                alert("Esse RA já foi cadastrado")
+                erro = true;
+                break;
+            }
+        }
+        if (erro == false) {
+            aluno.ra.push(ra);
+            aluno.nota.push(nota);
+            iptRA.value = "";
+            iptNota.value = "";
+            listar();
+        }
+        console.log(aluno);
+    }
+
+    function excluir() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var contador = 0;
+
+        for (i = 0; i < aluno.nota.length; i++) {
+            if (aluno.nota[i] == nota && aluno.ra[i] == ra) {
+                contador = 1;
+                delete aluno.ra[i];
+                delete aluno.nota[i];
+                break
+            }
+        }
+        if (contador == 0) {
+            alert("Dados incorretos");
+        }
+        listar();
+    }
+
+    function alterar() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var notaAlt = Number(iptNotaAlt.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptRA.value == "" || iptNota.value == "" || iptNotaAlt.value == "") {
+            alert("Preencha todos os campos");
+            erro = true;
+        }
+        if (ra < 2000 || ra > 3000) {
+            alert("O RA deve estar entre 2000 e 3000");
+            erro = true;
+        }
+        if (nota < 0 || nota > 10 || notaAlt < 0 || notaAlt > 10) {
+            alert("A nota deve estar entre 0 e 10");
+            erro = true;
+        }
+        if (erro == false) {
+            for (i = 0; i < aluno.ra.length; i++) {
+                if (aluno.ra[i] == ra && aluno.nota[i] == nota) {
+                    contador = 1;
+                    aluno.nota[i] = notaAlt;
+                    break;
+                }
+            }
+            if (contador == 0) {
+                alert("Dados incorretos");
+            } else {
+                iptRA.value = "";
+                iptNota.value = "";
+                iptNotaAlt.value = "";
+                listar();
+            }
+        }
+    }
+
+    function eliminar() {
+        for (i = 0; i < aluno.ra.length; i++) {
+            if (aluno.ra[i] != undefined) {
+                alunoAlt.ra.push(aluno.ra[i]);
+                alunoAlt.nota.push(aluno.nota[i]);
+            }
+        }
+        aluno = alunoAlt;
+        telaInicial.style.display = 'none';
+        telaConsulta.style.display = 'block';
+    }
+
+    function ajustar() {
+        telaInicial.style.display = 'none';
+        telaAjuste.style.display = 'block';
+    }
+
+/*--------------Fim Tela Inicial*--------------*/
+
+/*--------------Começo Tela Consulta*--------------*/
+    function porRA() {
+        porRADe = Number(iptRADe.value);
+        porRAAte = Number(iptRAAte.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptRADe.value == "" && iptRAAte.value == "") {
+            alert("Preencha os campos para prosseguir");
+            erro = true
+        } else if (iptRADe == "") {
+            alert("Preencha o campo para prossseguir");
+            erro = true;
+        } else if (porRAAte < porRADe) {
+            alert("Valores inválidos");
+            erro = true;
+        }
+        if (erro == false) {
+            divAx.style.display = 'none';
+            listaConsulta.innerHTML = "";
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= porRADe && aluno.ra[i] <= porRAAte) {
+                    divAx.style.display = 'block';
+                    listaConsulta.innerHTML += `${(aluno.ra.indexOf(aluno.ra[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}<br>`;
+                    contador = 1; 
+                }
+            }
+            if (contador == 0) {
+                alert("Não foram encontrados alunos nesse intervalo");
+            } else {
+                iptRADe.value = "";
+                iptRAAte.value = "";   
+                resumo();            
+            }
+        }
+    }
+
+    function porNota() {
+        porNotaDe = Number(iptNotaDe.value);
+        porNotaAte = Number(iptNotaAte.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptNotaDe.value == "" && iptNotaAte.value == "") {
+            alert("Preencha os campos para prosseguir");
+            erro = true
+        } else if (iptNotaDe == "") {
+            alert("Preencha o campo para prossseguir");
+            erro = true;
+        } else if (porNotaAte < porNotaDe) {
+            alert("Valores inválidos");
+            erro = true;
+        }
+        if (erro == false) {
+            divAx.style.display = 'none';
+            listaConsulta.innerHTML = "";
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.nota[i] >= porNotaDe && aluno.nota[i] <= porNotaAte) {
+                    divAx.style.display = 'block';
+                    listaConsulta.innerHTML += `${(aluno.nota.indexOf(aluno.nota[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}<br>`;
+                    contador = 1; 
+                }
+            }
+            if (contador == 0) {
+                alert("Não foram encontrados alunos nesse intervalo");
+            } else {
+                iptNotaDe.value = "";
+                iptNotaAte.value = "";
+                resumo();
+            }
+        }
+    }
+
+    function resumo() {
+        console.log("AAA");
+        var maxNotaVetor = 0;
+        var minNotaVetor = 10;
+        var maxNotaInt = 0;
+        var minNotaInt = 10;
+        var mediaVetor = 0;
+        var mediaInt = 0;
+        var contador = 0;
+
+        for (i = 0; i < aluno.nota.length; i++) {
+            if (aluno.nota[i] > maxNotaVetor) {
+                maxNotaVetor = aluno.nota[i];
+            }
+            if (aluno.nota[i] < minNotaVetor) {
+                minNotaVetor = aluno.nota[i];
+            }
+            if ((aluno.nota[i] >= porNotaDe && aluno.nota[i] <= porNotaAte && aluno.nota[i] > maxNotaInt) || (aluno.ra[i] >= porRADe && aluno.ra[i] <= porRAAte && aluno.nota[i] > maxNotaInt)) {
+                maxNotaInt = aluno.nota[i];
+            }
+            if ((aluno.nota[i] >= porNotaDe && aluno.nota[i] <= porNotaAte && aluno.nota[i] < minNotaInt) || (aluno.ra[i] >= porRADe && aluno.ra[i] <= porRAAte && aluno.nota[i] < minNotaInt)) {
+                minNotaInt = aluno.nota[i];
+            }
+            mediaVetor += aluno.nota[i];
+            if ((aluno.nota[i] >= porNotaDe && aluno.nota[i] <= porNotaAte) || (aluno.ra[i] >= porRADe && aluno.ra[i] <= porRAAte)) {
+                mediaInt += aluno.nota[i];
+                contador++;
+            }
+        }
+        mediaVetor = mediaVetor/aluno.nota.length;
+        mediaInt = mediaInt/contador;
+
+        divResumo.innerHTML = `<h4 style="text-decoration: underline;">Resumo FInal</h4> 
+        <b>Maior nota do vetor: </b>${maxNotaVetor}<br>
+        <b>Menor nota do vetor: </b>${minNotaVetor}<br><br>
+        <b>Maior nota do intervalo: </b>${maxNotaInt}<br>
+        <b>Menor nota do intervalo: </b>${minNotaInt}<br><br>
+        <b>Média das notas do vetor: </b>${mediaVetor}<br>
+        <b>Média das notas do intervalo: </b>${mediaInt}<br>`;  
+
+        porRADe = 0;
+        porRAAte = 0;
+        porNotaDe = 0;
+        porNotaAte = 0;
+    }
+/*--------------Fim Tela Consulta*--------------*/
+
+/*--------------Começo Tela Ajuste*--------------*/
+    function bonus() {
+        var ajusteDe = Number(iptAjusteDe.value);
+        var ajusteAte = Number(iptAjusteAte.value);
+        var bonusPontos = Number(bonusPonto.value);
+        var bonusPorcent = Number(bonusPorcen.value);
+        var ax = 0;
+        listaAjuste.innerHTML = "";
+
+        if (bonusPonto.value == "" && bonusPorcen.value == "") {
+            alert("Preencha um dos campos de bônus para prosseguir")
+        } else if (bonusPontos != 0 && bonusPorcent != 0) {
+            alert("Insira apenas um dos valores para o bônus");
+        } else if (ajusteAte < ajusteDe) {
+            alert("Preencha corretamente os valores 'De:' e 'Até:'")
+        } else if (bonusPontos != 0){
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] + bonusPontos;
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                }
+            }
+        } else {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] + aluno.nota[i] * (bonusPorcent/100);
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                }
+            }
+        }
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            listaAjuste.innerHTML += `${i+1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}<br>`;
+        }
+    
+    }
+
+    function reducao() {
+        var ajusteDe = Number(iptAjusteDe.value);
+        var ajusteAte = Number(iptAjusteAte.value);
+        var reducaoPontos = Number(reducaoPonto.value);
+        var reducaoPorcent = Number(reducaoPorcen.value);
+        var ax = 0;
+        listaAjuste.innerHTML = "";
+
+        if (reducaoPonto.value == "" && reducaoPorcen.value == "") {
+            alert("Preencha um dos campos de redução para prosseguir")
+        } else if (reducaoPontos != 0 && reducaoPorcent != 0) {
+            alert("Insira apenas um dos valores para a redução");
+        } else if (ajusteAte < ajusteDe) {
+            alert("Preencha corretamente os valores 'De:' e 'Até:'")
+        } else if (reducaoPontos != 0){
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] - reducaoPontos;
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                } else if (aluno.nota[i] < 0) {
+                    aluno.nota[i] = 0;
+                }
+            }
+        } else {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] - aluno.nota[i] * (reducaoPorcent/100);
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                } else if (aluno.nota[i] < 0) {
+                    aluno.nota[i] = 0;
+                }
+            }
+        }
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            listaAjuste.innerHTML += `${i+1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}<br>`;
+        }
+    }
+/*--------------Fim Tela Ajuste*--------------*/
+</script>

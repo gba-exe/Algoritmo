@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas</title>
+</head>
+
+<body>
+    <!-- Tela de Manutenção de Notas -->
+    <div class="divContent" id="manutencaoNotas">
+        <h1>Manutenção de Notas</h1>
+        <div class="divHorizontal">
+            <div class=".divContent">
+                <p>RA: </p>
+                <input type="text" id="iptRA">
+            </div>
+            <div class=".divContent">
+                <p>Nota: </p>
+                <input type="text" id="iptNota">
+            </div>
+        </div>
+        <div class="divHorizontal">
+            <button onclick="incluir()">Incluir</button>
+            <button onclick="excluir()">Exlcuir</button>
+        </div>
+        <div class="divHorizontal">
+            <button onclick="alterar()">Alterar</button>
+            <div class=".divContent">
+                Nota:
+                <input type="text" id="iptAlterar">
+            </div>
+        </div>
+        <button onclick="eliminar()">Eliminar Buraco/Consultar</button>
+        <button onclick="ajustar()">Ajustar notas</button>
+        <p id="resposta"></p>
+    </div>
+    <!-- /Tela de Manutenção de Notas -->
+
+    <!-- Tela de Consulta -->
+    <div class="divContent" id="telaConsulta">
+        <h1>Tela de Consulta</h1>
+        <div class="divHorizontal">
+            <button onclick="porRA()">Por RA</button>
+            <div class=".divContent">
+                <p>De:</p>
+                <input type="text" id="iptDeRA">
+            </div>
+            <div class=".divContent">
+                <p>Até:</p>
+                <input type="text" id="iptAteRA">
+            </div>
+        </div>
+        <div class="divHorizontal">
+            <button onclick="porNota()">Por Nota</button>
+            <div class=".divContent">
+                <p>De:</p>
+                <input type="text" id="iptDeNota">
+            </div>
+            <div class=".divContent">
+                <p>Até:</p>
+                <input type="text" id="iptAteNota">
+            </div>
+        </div>
+        <p id="respostaConsulta"></p>
+    </div>
+    <!-- /Tela de Consulta -->
+
+    <!-- Tela Ajuste de Notas -->
+    <div class="divContent" id="telaAjuste">
+        <h1>Tela de Ajuste de Notas</h1>
+        <div class="divHorizontal">
+            <h1>RA</h1>
+            <div class=".divContent">
+                <p>De:</p>
+                <input type="text" id="iptDeAjuste">
+            </div>
+            <div class=".divContent">
+                <p>Até:</p>
+                <input type="text" id="iptAteAjuste">
+            </div>
+        </div>
+        <div class="divHorizontal">
+            <button onclick="bonus()">Bonus
+            </button>
+            <p>Pontos:</p>
+            <div class=".divContent">
+
+                <input type="text" id="iptPtBonus">
+            </div>
+            ou %
+            <div class=".divContent">
+
+                <input type="text" id="iptPcBonus">
+            </div>
+        </div>
+        <div class="divHorizontal">
+            <button>Redução</button>
+            <p>Pontos:</p>
+            <div class=".divContent">
+
+                <input type="text" id="iptPtReducao">
+            </div>
+            ou %
+            <div class=".divContent">
+
+                <input type="text" id="iptPcReducao">
+            </div>
+        </div>
+        <p id="respostaAjuste"></p>
+    </div>
+    <!-- /Tela Ajuste de Notas -->
+</body>
+
+</html>
+<script>
+    // manutencaoNotas.style.display = "none"; 
+    telaConsulta.style.display = "none";
+    telaAjuste.style.display = "none";
+
+    var aluno = {
+        ra: [],
+        nota: []
+    }
+
+    var alunoLess = {
+        ra: [],
+        nota: []
+    }
+
+    var porRADe = 0;
+    var ateRA = 0;
+    var deNota = 0;
+    var ateNota = 0;
+
+    /*Começo Tela de Manutenção de notas **/
+    function listar() {
+        resposta.innerHTML = `<b>Cadastros Efetuados</b>`;
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            if (aluno.ra[i] != undefined) {
+                resposta.innerHTML += `<p>${i + 1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+            } else {
+                resposta.innerHTML += `<p>${i + 1}º - R.A. </p>`;
+            }
+        }
+    }
+
+    function incluir() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var erro = false;
+
+        if (iptRA == "" || iptNota == "") {
+            alert("Preencha todos os campos");
+            erro = true;
+        }
+        if (ra < 2000 || ra > 3000) {
+            alert("O RA deve estar entre 2000 e 3000");
+            erro = true;
+        }
+        if (nota < 0 || nota > 10) {
+            alert("A nota deve estar entre 0 e 10");
+            erro = true;
+        }
+        for (i = 0; i < aluno.ra.length; i++) {
+            if (aluno.ra[i] == ra) {
+                alert("Esse RA já foi cadastrado")
+                erro = true;
+                break;
+            }
+        }
+        if (erro == false) {
+            aluno.ra.push(ra);
+            aluno.nota.push(nota);
+            iptRA.value = "";
+            iptNota.value = "";
+            listar();
+        }
+        console.log(aluno);
+    }
+
+    function excluir() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var contador = 0;
+
+        for (i = 0; i < aluno.nota.length; i++) {
+            if (aluno.nota[i] == nota && aluno.ra[i] == ra) {
+                contador = 1;
+                delete aluno.ra[i];
+                delete aluno.nota[i];
+                break
+            }
+        }
+        if (contador == 0) {
+            alert("Dados incorretos");
+        } else {
+            iptRA.value = "";
+            iptNota.value = "";
+        }
+        listar();
+    }
+
+    function alterar() {
+        var ra = Number(iptRA.value);
+        var nota = Number(iptNota.value);
+        var notaAlt = Number(iptAlterar.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptRA.value == "" || iptNota.value == "" || iptAlterar.value == "") {
+            alert("Preencha todos os campos");
+            erro = true;
+        }
+        if (ra < 2000 || ra > 3000) {
+            alert("O RA deve estar entre 2000 e 3000");
+            erro = true;
+        }
+        if (nota < 0 || nota > 10 || notaAlt < 0 || notaAlt > 10) {
+            alert("A nota deve estar entre 0 e 10");
+            erro = true;
+        }
+        if (erro == false) {
+            for (i = 0; i < aluno.ra.length; i++) {
+                if (aluno.ra[i] == ra && aluno.nota[i] == nota) {
+                    contador = 1;
+                    aluno.nota[i] = notaAlt;
+                    break;
+                }
+            }
+            if (contador == 0) {
+                alert("Dados incorretos");
+            } else {
+                iptRA.value = "";
+                iptNota.value = "";
+                iptAlterar.value = "";
+                listar();
+            }
+        }
+    }
+
+    function eliminar() {
+        for (i = 0; i < aluno.ra.length; i++) {
+            if (aluno.ra[i] != undefined) {
+                alunoLess.ra.push(aluno.ra[i]);
+                alunoLess.nota.push(aluno.nota[i]);
+            }
+        }
+        aluno = alunoLess;
+        manutencaoNotas.style.display = 'none';
+        telaConsulta.style.display = 'block';
+    }
+
+    function ajustar() {
+        manutencaoNotas.style.display = 'none';
+        telaAjuste.style.display = 'block';
+    }
+
+    /*Fim Tela de Manutenção de notas **/
+
+    /*Começo Tela Consulta**/
+    function porRA() {
+        deRA = Number(iptDeRA.value);
+        ateRA = Number(iptAteRA.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptDeRA.value == "" && iptAteRA.value == "") {
+            alert("Preencha os campos para prosseguir");
+            erro = true
+        } else if (iptDeRA == "") {
+            alert("Preencha o campo para prossseguir");
+            erro = true;
+        } else if (ateRA < deRA && ateRA != 0) {
+            alert("Valores inválidos");
+            erro = true;
+        }
+        if (erro == false) {
+            respostaConsulta.innerHTML = "<b>Cadastros Selecionados: </b>";
+            if(deRA != 0 && ateRA != 0) {
+                for (i = 0; i < aluno.nota.length; i++) {
+                    if (aluno.ra[i] >= deRA && aluno.ra[i] <= ateRA) {
+                        respostaConsulta.innerHTML += `<p>${(aluno.ra.indexOf(aluno.ra[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+                        contador = 1;
+                    }
+                }
+            } else {
+                for (i = 0; i < aluno.nota.length; i++) {
+                    if (aluno.ra[i] >= deRA) {
+                        respostaConsulta.innerHTML += `<p>${(aluno.ra.indexOf(aluno.ra[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+                        contador = 1;
+                    }
+                }
+            }
+            if (contador == 0) {
+                alert("Não foram encontrados alunos nesse intervalo");
+            } else {
+                iptDeRA.value = "";
+                iptAteRA.value = "";
+                resumo();
+            }
+        }
+    }
+
+    function porNota() {
+        deNota = Number(iptDeNota.value);
+        ateNota = Number(iptAteNota.value);
+        var erro = false;
+        var contador = 0;
+
+        if (iptDeNota.value == "" && iptAteNota.value == "") {
+            alert("Preencha os campos para prosseguir");
+            erro = true
+        } else if (iptDeNota == "") {
+            alert("Preencha o campo para prossseguir");
+            erro = true;
+        } else if (ateNota < deNota && ateNota != 0) {
+            alert("Valores inválidos");
+            erro = true;
+        }
+        if (erro == false) {
+            respostaConsulta.innerHTML = "<b>Cadastros Selecionados: </b>";
+            if (deNota != 0 && ateNota != 0) {
+                for (i = 0; i < aluno.nota.length; i++) {
+                    if (aluno.nota[i] >= deNota && aluno.nota[i] <= ateNota) {
+                        respostaConsulta.innerHTML += `<p>${(aluno.nota.indexOf(aluno.nota[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+                        contador = 1;
+                    }
+                }
+            } else {
+                ateNota = 10
+                for (i = 0; i < aluno.nota.length; i++) {
+                    if (aluno.nota[i] >= deNota && aluno.nota[i] <= ateNota) {
+                        respostaConsulta.innerHTML += `<p>${(aluno.nota.indexOf(aluno.nota[i]) + 1)}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+                        contador = 1;
+                    }
+                }
+            }
+                if (contador == 0) {
+                    alert("Não foram encontrados alunos nesse intervalo");
+                } else {
+                    iptDeNota.value = "";
+                    iptAteNota.value = "";
+                    resumo();
+                }
+        }
+    }
+
+    function resumo() {
+        var maxNotaVetor = 0;
+        var minNotaVetor = 10;
+        var maxNotaInt = 0;
+        var minNotaInt = 10;
+        var mediaVetor = 0;
+        var mediaInt = 0;
+        var contador = 0;
+
+        for (i = 0; i < aluno.nota.length; i++) {
+            if (aluno.nota[i] > maxNotaVetor) {
+                maxNotaVetor = aluno.nota[i];
+            }
+            if (aluno.nota[i] < minNotaVetor) {
+                minNotaVetor = aluno.nota[i];
+            }
+            if ((aluno.nota[i] >= deNota && aluno.nota[i] <= ateNota && aluno.nota[i] > maxNotaInt) || (aluno.ra[i] >= deRA && aluno.ra[i] <= ateRA && aluno.nota[i] > maxNotaInt)) {
+                maxNotaInt = aluno.nota[i];
+            }
+            if ((aluno.nota[i] >= deNota && aluno.nota[i] <= ateNota && aluno.nota[i] < minNotaInt) || (aluno.ra[i] >= deRA && aluno.ra[i] <= ateRA && aluno.nota[i] < minNotaInt)) {
+                minNotaInt = aluno.nota[i];
+            }
+            mediaVetor += aluno.nota[i];
+            if ((aluno.nota[i] >= deNota && aluno.nota[i] <= ateNota) || (aluno.ra[i] >= deRA && aluno.ra[i] <= ateRA)) {
+                mediaInt += aluno.nota[i];
+                contador++;
+            }
+        }
+        mediaVetor = mediaVetor / aluno.nota.length;
+        mediaInt = mediaInt / contador;
+
+        respostaConsulta.innerHTML += `<h1>Resumo Final</h1> 
+        <p><b>Maior nota do vetor: </b>${maxNotaVetor}</p>
+        <p><b>Menor nota do vetor: </b>${minNotaVetor}</p>
+        <p><b>Maior nota do intervalo: </b>${maxNotaInt}</p>
+        <p><b>Menor nota do intervalo: </b>${minNotaInt}</p>
+        <p><b>Média das notas do vetor: </b>${mediaVetor}</p>
+        <p><b>Média das notas do intervalo: </b>${mediaInt}</p>`;
+
+        porRADe = 0;
+        ateRA = 0;
+        deNota = 0;
+        ateNota = 0;
+    }
+    /*Fim Tela Consulta**/
+
+    /*Começo Tela Ajuste**/
+    function bonus() {
+        var ajusteDe = Number(iptDeAjuste.value);
+        var ajusteAte = Number(iptAteAjuste.value);
+        var ptBonus = Number(iptPtBonus.value);
+        var pcBonus = Number(iptPcBonus.value);
+        var ax = 0;
+        respostaAjuste.innerHTML = "";
+
+        if (iptPtBonus.value == "" && iptPcBonus.value == "") {
+            alert("Preencha um dos campos de bônus para prosseguir")
+        } else if (ptBonus != 0 && pcBonus != 0) {
+            alert("Insira apenas um dos valores para o bônus");
+        } else if (ajusteAte < ajusteDe) {
+            alert("Preencha corretamente os valores 'De:' e 'Até:'")
+        } else if (ptBonus != 0) {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] + ptBonus;
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                }
+            }
+        } else {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] + aluno.nota[i] * (pcBonus / 100);
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                }
+            }
+        }
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            respostaAjuste.innerHTML += `<p>${i + 1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+        }
+
+    }
+
+    function reducao() {
+        var ajusteDe = Number(iptDeAjuste.value);
+        var ajusteAte = Number(iptAteAjuste.value);
+        var ptReducao = Number(iptPtReducao.value);
+        var pcReducao = Number(iptPcReducao.value);
+        var ax = 0;
+        respostaAjuste.innerHTML = "";
+
+        if (iptPtReducao.value == "" && iptPcReducao.value == "") {
+            alert("Preencha um dos campos de redução para prosseguir")
+        } else if (ptReducao != 0 && pcReducao != 0) {
+            alert("Insira apenas um dos valores para a redução");
+        } else if (ajusteAte < ajusteDe) {
+            alert("Preencha corretamente os valores 'De:' e 'Até:'")
+        } else if (ptReducao != 0) {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] - ptReducao;
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                } else if (aluno.nota[i] < 0) {
+                    aluno.nota[i] = 0;
+                }
+            }
+        } else {
+            for (i = 0; i < aluno.nota.length; i++) {
+                if (aluno.ra[i] >= ajusteDe && aluno.ra[i] <= ajusteAte) {
+                    ax = aluno.nota[i] - aluno.nota[i] * (pcReducao / 100);
+                    aluno.nota[i] = ax;
+                }
+                if (aluno.nota[i] > 10) {
+                    aluno.nota[i] = 10;
+                } else if (aluno.nota[i] < 0) {
+                    aluno.nota[i] = 0;
+                }
+            }
+        }
+        for (i = aluno.nota.length - 1; i >= 0; i--) {
+            respostaAjuste.innerHTML += `<p>${i + 1}º - R.A. ${aluno.ra[i]} - Nota: ${aluno.nota[i]}</p>`;
+        }
+    }
+/*Fim Tela Ajuste**/
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        margin: auto;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+        padding: 5%;
+        width: 100%;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: 60%;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .divHorizontal {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        padding: 2%;
+    }
+
+    .divHorizontal .divContent {
+        width: 20%;
+        border: none;
+    }
+
+    .divHorizontal button {
+        width: 30%;
+    }
+</style>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <p id="pergunta">Digite o seu 1º filme favorito:</p>
+        <input type="text" id="iptFilmes">
+        <button onclick="cadastrar()">Cadastrar Filme</button>
+        <button onclick="favoritos()">Ver Favoritos</button>
+        <p id="resposta"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    var filmes = [];
+    var contagem = 1
+    function cadastrar() {
+        contagem++
+        filmes.push(iptFilmes.value);
+        iptFilmes.value = ''
+        pergunta.innerHTML = `Digite o seu ${contagem}º filme favorito:`
+    }
+
+    function favoritos() {
+        if (filmes.length > 0) {
+            pergunta.innerHTML = `Digite o seu filme favorito:`
+            resposta.innerHTML = `Total: ${filmes.length}`
+            resposta.innerHTML += `<p>O que mais gosta é ${filmes[0]}</p>`
+            resposta.innerHTML += `<p>E desses, o que menos gosta é ${filmes[filmes.length - 1]}</p>`
+        } else {
+            alert(`Nenhum filme cadastrado!`)
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

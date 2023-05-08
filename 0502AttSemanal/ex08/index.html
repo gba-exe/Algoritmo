@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar alunos</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <p id="pergunta">Digite o nome do aluno:</p>
+        <input type="text" id="iptAluno">
+        <button onclick="cadastrar()">Cadastrar</button>
+        <p id="resposta"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    var aluno = [];
+    function cadastrar() {
+        var output = '';
+        resposta.innerHTML = ''
+        aluno.push(iptAluno.value);
+
+        iptAluno.value = ''
+
+        for (i = aluno.length - 1; i >= 0; i--) {
+            output = `${i + 1} - ${aluno[i]}`
+            resposta.innerHTML += `<p>${output}</p>`
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .pVermelho {
+        color: red;
+    }
+
+    .pAzul {
+        color: blue;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
