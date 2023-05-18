@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio?</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        Insira o seu número da sorte<input type="text" id="iptNumeroSorte">
+        <button onclick="valendo()">Valendo!</button>
+        <p id="resposta"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    function valendo() {
+        var numeroSorte = iptNumeroSorte.value;
+        var i = 0;
+        var fim = 101;
+
+        while (fim != numeroSorte) {
+            fim = (Math.random() * 100).toFixed();
+            console.log(fim);   
+
+            i++;
+        }
+        console.log(i);
+
+        resposta.innerHTML = `<b>Foram necessários ${i} sorteios</b>`;
+        i=0;
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

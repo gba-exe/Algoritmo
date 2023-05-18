@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maratona</title>
+</head>
+
+<body>
+    Insira o nome do corredor
+    <br><input type="text" id="iptNome">
+    <button onclick="inserirNome()">Inserir nome</button><br>
+    Insira a distância da prova
+    <br><input type="text" id="iptDistancia">
+    <button onclick="inserirNome()">Inserir Distância</button><br>
+    <button onclick="correr()">Dar a largada</button>
+    <div id="divResposta"></div>
+</body>
+
+</html>
+
+<script>
+    const maratona = [];
+    var nomes = 0;
+    const podio = [];
+
+    function inserirNome() {
+        var nome = iptNome.value;
+        if (nomes < 5) {
+            maratona.push({
+                'nome': nome,
+                'tempo': [],
+                'tempoFinal': 0
+            });
+            nomes++;
+            iptNome.value = '';
+            console.log(maratona);
+        }
+
+        /*         console.log(nomes);
+                console.log(maratona); */
+    }
+
+    function correr() {
+        const distancia = iptDistancia.value;
+        var tempo1 = 0;
+        var tempo2 = 0;
+        var tempo3 = 0;
+        for (var i = 1; i < distancia; i++) {
+            console.log(i);
+
+            var menorTempo = 100;
+            var corredor = '';
+
+            for (var j = 0; j < maratona.length; j++) {
+                var random = Math.random() * 2 + 4
+                maratona[j].tempo.push(random);
+                maratona[j].tempoFinal += random;
+                console.table(maratona[j]);
+                for (var t = 0; t < maratona.length; t++) {
+                    if (menorTempo > maratona[j].tempo[t]) {
+                        menorTempo = maratona[j].tempo[t];
+                        corredor = maratona[j].nome
+                    }
+                }
+            }
+
+            alert(`O corredor ${corredor} está na frente.`)
+        }
+
+        for (var i = 0; i < maratona.length; i++) {
+            var nome = '';
+            if (maratona[i].tempoFinal > tempo1) {
+                tempo1 = maratona[i].tempoFinal;
+                nome = maratona[i].nome;
+                console.log('a')
+            } else if (maratona[i].tempo2 > tempo2) {
+                tempo2 = maratona[i].tempoFinal;
+                nome = maratona[i].nome;
+                console.log('b')
+            } else if (maratona[i].tempo3 > tempo3) {
+                tempo2 = maratona[i].tempoFinal;
+                nome = maratona[i].nome;
+                console.log('c')
+            }
+            if (nome != '') {podio.push(`${i}: ${nome}`);}
+        }
+/*         divResposta.innerHTML = `
+        Terceiro lugar: ${maratona[rd].nome}<br>
+        Segundo lugar: ${.nome}<br>
+        Primeiro lugar: ${maratona[st].nome}<br>
+        ` */
+    }
+</script>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medias</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <button onclick="verNota()">Gerar uma nota de aluno entre 3 e 10</button>
+        <button onclick="verFrequencia()">Gerar uma frequência de aluno entre 50 e 100</button>
+        <button onclick="verAprovado()">Aprovado?</button>
+        <div class="resposta">
+            <p id="pNota"></p>
+            <p id="pFrequencia"></p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var nota = 0;
+    var frequencia = 0;
+    
+    function verNota() {
+        var aleatorio = Math.random();
+        nota = aleatorio*7+3
+
+        pNota.innerHTML = `<p>Nota: ${nota.toFixed(1)}</p>`;
+    }
+
+    function verFrequencia() {
+        var aleatorio = Math.random();
+        frequencia = aleatorio*50+50
+
+        pFrequencia.innerHTML = `<p>Frequencia: ${frequencia.toFixed(1)}</p>`;
+    }
+
+    function verAprovado() {
+        var aprovado = nota >= 7 && frequencia >= 75;
+
+        if (aprovado) {
+        alert(
+            `Aprovado!\n
+            Nota: ${nota.toFixed(1)}\n
+            Frequencia: ${frequencia.toFixed(1)}`
+        );
+        } else {
+        alert(
+            `Reprovado!\n
+            Nota: ${nota.toFixed(1)}\n
+            Frequencia: ${frequencia.toFixed(1)}`
+        );
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

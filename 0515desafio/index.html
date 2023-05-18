@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="sortear()">Sortear</button>
+    <p id="resposta"></p>
+</body>
+<script>
+    const cartas = {
+        ouros: ['Às',2,3,4,5,6,7,'Valete','Dama','Rei'],
+        espadas:['Às',2,3,4,5,6,7,'Valete','Dama','Rei'],
+        copas: ['Às',2,3,4,5,6,7,'Valete','Dama','Rei'],
+        paus: ['Às',2,3,4,5,6,7,'Valete','Dama','Rei'],
+    }
+
+    const mao = {
+        naipe: [],
+        tipo: [],
+        valor: 0,
+    }
+
+    const keys = Object.keys(cartas);
+    var random = 0;
+    var naipe = '';
+    var tipo = 0;
+    var valor = 0;
+    var valorTotal = 0;
+
+    function randomCarta(array) {
+        const carta = Math.floor(Math.random()*array.length);
+
+        tipo = array[carta]
+    }
+    
+    function sortear() {
+        random = Math.floor(Math.random()*keys.length);
+        naipe = keys[random];
+        randomCarta(cartas[naipe]);
+        if(tipo == 'Às') {
+            valor = 1;
+        } else if (typeof tipo === 'string'){
+            valor = 0.5;
+        } else {
+            valor = tipo;
+        }
+                
+        mao.naipe.push(naipe);
+        mao.tipo.push(tipo);
+        mao.valor += valor;
+
+        for (i=0; i<mao.naipe.length-1; i++) {
+            if (mao.tipo[i] == tipo && mao.naipe[i] == naipe){
+                sortear();
+            } else {
+                console.log(`Naipe: ${naipe}\nTipo: ${tipo}`);
+                console.table(mao)
+            }
+        }
+        resposta.innerHTML += `(${valor} pontos) ${tipo} de ${naipe}<br>`
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio?</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        Digite quatos números você quer sortear <input type="text" id="iptQtdNumeros">
+        <button onclick="sortear()">Sortear Números</button>
+        <p id="resposta"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    function sortear() {
+        resposta.innerHTML = '';
+        var qtdNumeros = iptQtdNumeros.value;
+        var numeros = [];
+        var maior = 0;
+        var menor = 101;
+        var soma = 0;
+        var media = 0;
+
+        for (i=0; i<qtdNumeros; i++) {
+            var random = (Math.random()*100);
+
+            numeros.push(random);
+        }
+
+        for (i=numeros.length-1; i>=0; i--) {
+            resposta.innerHTML += `<p>${i+1} - ${numeros[i].toFixed()}</p>`
+            if (numeros[i] > maior) {
+                maior = numeros[i].toFixed();
+            }
+            if (numeros[i] < menor) {
+                menor = numeros[i].toFixed();
+            }
+
+            soma += numeros[i];
+        }
+
+        media = (soma / numeros.length).toFixed(2);
+        resposta.innerHTML += `
+        <p>O maior número sorteado foi: ${maior}</p>
+        <p>O menor número sorteado foi: ${menor}</p>
+        <p>A média de todos os números sorteados é: ${media}</p>
+        `;
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

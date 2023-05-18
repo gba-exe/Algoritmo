@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedra Papel Tesoura</title>
+</head>
+
+<body>
+    <div class="divContent" id="tela">
+        <button onclick="jogar()">Jogar</button>
+        <p id="resposta"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    function jogar() {
+        var jogador1 = (Math.random()*2+1).toFixed();
+        var jogador2 = (Math.random()*2+1).toFixed();
+
+        var pedra1 = jogador1 == 1; 
+        var papel1 = jogador1 == 2; 
+        var tesoura1 = jogador1 == 3;
+
+        var pedra2 = jogador2 == 1; 
+        var papel2 = jogador2 == 2; 
+        var tesoura2 = jogador2 == 3; 
+
+        var empate = jogador1 == jogador2;
+
+        if (pedra1 && tesoura2) {
+            resposta.innerHTML = `<b>Jogador 1 venceu por que pedra quebra tesoura</b>`;
+        }
+
+        if (papel1 && pedra2) {
+            resposta.innerHTML = `<b>Jogador 1 venceu por que papel cobre pedra</b>`;
+        }
+
+        if (tesoura1 && papel2) {
+            resposta.innerHTML = `<b>Jogador 1 venceu por que tesoura corta papel</b>`;
+        }
+
+
+        if (pedra2 && tesoura1) {
+            resposta.innerHTML = `<b>Jogador 2 venceu por que pedra quebra tesoura</b>`;
+        }
+
+        if (papel2 && pedra1) {
+            resposta.innerHTML = `<b>Jogador 2 venceu por que papel cobre pedra</b>`;
+        }
+
+        if (tesoura2 && papel1) {
+            resposta.innerHTML = `<b>Jogador 2 venceu por que tesoura corta papel</b>`;
+        } 
+
+        if (empate) {
+            resposta.innerHTML = `<b>EMPATE! Jogue novamente!</b>`;
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Ubuntu:ital@0;1&display=swap');
+
+    * {
+        border-radius: 20px;
+        font-family: 'Noto Sans', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    input {
+        border: solid 1px #000;
+        font-size: larger;
+    }
+
+    button {
+        border: solid 1px #000;
+    }
+
+    body {
+        height: 100vh;
+        margin: none;
+    }
+
+    .divContent {
+        border: solid 1px #000;
+        width: fit-content;
+        height: fit-content;
+        background-color: burlywood;
+        padding: 1%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
